@@ -1,3 +1,3 @@
-prit{hello world}
+print {hello world}
 :( openAi
 )
