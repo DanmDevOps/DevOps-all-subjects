@@ -1,0 +1,3 @@
+prit{hello world}
+:( openAi
+)
