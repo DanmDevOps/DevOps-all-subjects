@@ -1,0 +1,8 @@
+# Ignore sensitive or unnecessary files
+.env
+node_modules/
+.vscode/
+.idea/
+.DS_Store
+__pycache__/
+kubeconfig

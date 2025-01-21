@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bike GIFs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+        }
+        img {
+            width: 300px;
+            height: auto;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Dirt Bike GIFs!</h1>
+    <div id="gif-container"></div>
+    <button onclick="refreshGIF()">Refresh GIF</button>
+
+    <script>
+        const gifs = [
+            'https://media.giphy.com/media/3oEjHV0z8p2n9HR7HG/giphy.gif',
+            'https://media.giphy.com/media/l0ExhATG3dbccRmPK/giphy.gif',
+            'https://media.giphy.com/media/xT9KVF6ck3clfqFI88/giphy.gif',
+        ];
+
+        function refreshGIF() {
+            const gifContainer = document.getElementById('gif-container');
+            const randomIndex = Math.floor(Math.random() * gifs.length);
+            gifContainer.innerHTML = `<img src="${gifs[randomIndex]}" alt="Dirt Bike GIF">`;
+        }
+
+        // Load a random GIF on page load
+        refreshGIF();
+    </script>
+</body>
+</html>
