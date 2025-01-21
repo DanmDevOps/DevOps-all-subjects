@@ -3,17 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Bike GIFs</title>
+    <title>My Dirt Bike GIFs</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
         }
         img {
             width: 300px;
             height: auto;
             margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -23,12 +37,17 @@
     <button onclick="refreshGIF()">Refresh GIF</button>
 
     <script>
+        // List of GIFs you provided
         const gifs = [
-            'https://media.giphy.com/media/3oEjHV0z8p2n9HR7HG/giphy.gif',
-            'https://media.giphy.com/media/l0ExhATG3dbccRmPK/giphy.gif',
-            'https://media.giphy.com/media/xT9KVF6ck3clfqFI88/giphy.gif',
+            'https://media.giphy.com/media/xUA7b521V2Mmsw0kfe/giphy.gif',
+            'https://media.giphy.com/media/3o6gb2toe0pEknBfz2/giphy.gif',
+            'https://media.giphy.com/media/26gson1kP8b8H0ci4/giphy.gif',
+            'https://media.giphy.com/media/xT0BKp4MQpmO7xo04o/giphy.gif',
+            'https://media.giphy.com/media/2zowgaSTryDviVwe6u/giphy.gif',
+            'https://media.giphy.com/media/5YZVifZ1B6KmQ/giphy.gif'
         ];
 
+        // Function to refresh the GIF
         function refreshGIF() {
             const gifContainer = document.getElementById('gif-container');
             const randomIndex = Math.floor(Math.random() * gifs.length);
