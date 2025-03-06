@@ -149,3 +149,10 @@ def calculator(a, b, op):
     elif op == "divide":
         return a / b
 print("10 + 5 =", calculator(10, 5, "add"))
+
+
+
+# 19.
+def is_palindrome(word):
+    return word == word[::-1]
+print("racecar is a palindrome:", is_palindrome("racecar"))
