@@ -21,9 +21,12 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: Debug – List files
+        run: ls -R
+
       - name: Install dependencies
         run: |
-           pip install -r ./app/requirements.txt
+          pip install -r ./app/requirements.txt
 
       - name: Run unit tests
         run: |
