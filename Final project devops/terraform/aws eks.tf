@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "israel-1"
+  region = "us-east-1"
 }
 
 resource "aws_eks_cluster" "eks" {
