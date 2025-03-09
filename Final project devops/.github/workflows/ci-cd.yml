@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r app/requirements.txt
+          run: pip install -r "Final project devops/app/requirements.txt"
 
       - name: Run unit tests
         run: |
