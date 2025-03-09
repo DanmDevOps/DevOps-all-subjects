@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # 🔹 מבטיח שהקוד ימשוך את כל הקבצים כמו שצריך
+          fetch-depth: 0 
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -34,7 +34,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          pytest ./app/tests/test_main.py
+          pytest ./app/tests/main.py
 
       - name: Build Docker Image
         run: |
