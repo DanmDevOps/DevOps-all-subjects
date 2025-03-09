@@ -16,15 +16,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  
+          fetch-depth: 0  # 🔹 מבטיח שהקוד ימשוך את כל הקבצים כמו שצריך
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
 
-      - name: Debug – List files
-        run: ls -R
+      - name: Debug – Print current directory and list files
+        run: |
+          pwd
+          ls -R
 
       - name: Install dependencies
         run: |
