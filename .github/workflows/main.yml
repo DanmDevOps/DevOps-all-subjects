@@ -15,22 +15,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # 🔹 מבטיח שהקוד ימשוך את כל הקבצים כמו שצריך
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
 
-      - name: Debug – Print current directory and list files
-        run: |
-          pwd
-          ls -R
+      - name: Debug – Print directory and list files
+        run: ls -R
 
       - name: Install dependencies
         run: |
-          pip install -r "Final project devops/app/requirements.txt"
+          pip install -r ./app/requirements.txt
 
       - name: Run unit tests
         run: |
