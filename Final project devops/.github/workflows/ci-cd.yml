@@ -7,11 +7,12 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build:
+  lint:
+    name: Code Linting
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,23 +20,142 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: '3.9'
 
-      - name: Debug – Print current directory and list files
-        run: ls -R
-
-      - name: Build Docker Image
+      - name: Install dependencies
         run: |
-          docker build -t danmonti/flask-app:latest .
+          python -m pip install --upgrade pip
+          pip install flake8 bandit
 
-      - name: Log in to DockerHub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "danmonti" --password-stdin
+      - name: Run flake8
+        run: flake8 app/
 
-      - name: Push Docker Image
+      - name: Run Bandit Security Scan
+        run: bandit -r app/
+
+  static_analysis:
+    name: Static Code Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        with:
+          projectBaseDir: .
+          args: '-Dsonar.projectKey=MyProject -Dsonar.organization=myorg -Dsonar.host.url=https://sonarcloud.io'
+
+  test:
+    name: Run Tests
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
         run: |
-          docker push danmonti/flask-app:latest
+          pip install -r requirements.txt
 
-      - name: Deploy to Kubernetes
+      - name: Run unit tests
+        run: pytest app/tests/
+
+  build:
+    name: Build and Push Docker Image
+    needs: [test, static_analysis]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
         run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
+          docker build -t myapp:latest .
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push Docker image
+        run: |
+          docker tag myapp:latest mydockerhub/myapp:latest
+          docker push mydockerhub/myapp:latest
+
+      - name: Run Trivy security scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'mydockerhub/myapp:latest'
+
+  deploy:
+    name: Deploy to Kubernetes
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Kubernetes CLI
+        uses: azure/setup-kubectl@v1
+
+      - name: Deploy using Helm
+        run: |
+          helm upgrade --install myapp helm/
+
+  infrastructure:
+    name: Deploy Infrastructure with Terraform
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init & Apply
+        run: |
+          terraform init
+          terraform apply -auto-approve
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Destroy Infrastructure (on delete event)
+        if: github.event_name == 'delete'
+        run: terraform destroy -auto-approve
+
+  monitoring:
+    name: Set up Monitoring
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy Prometheus & Grafana
+        run: |
+          kubectl apply -f monitoring/prometheus.yaml
+          kubectl apply -f monitoring/grafana.yaml
+
+  notifications:
+    name: Send Notifications
+    needs: [test, build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack on Success
+        if: success()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment Successful!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Notify Slack on Failure
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment Failed!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
