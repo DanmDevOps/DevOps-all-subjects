@@ -7,6 +7,7 @@ The main goal is to enable **fast, stable, and secure development**, ensuring th
 
 
 
+├project/
 ├── .github/workflows/ci-cd.yml  # CI/CD pipeline definition
 ├── app/
 │   ├── main.py                  # Flask application entry point
