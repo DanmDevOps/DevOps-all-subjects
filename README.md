@@ -87,51 +87,7 @@ This project implements a complete **CI/CD pipeline** for deploying a **Flask-ba
 - Kubernetes (Minikube or AWS EKS)
 - Terraform CLI
 
-### Steps
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-repo/devops-final-project.git
-   cd devops-final-project
-   ```
-2. Install dependencies:
-   ```sh
-   pip install -r app/requirements.txt
-   ```
-3. Run locally:
-   ```sh
-   python app/main.py
-   ```
-4. Run tests:
-   ```sh
-   pytest app/tests/
-   ```
-
-## Deployment
-
-### Using Docker
-
-```sh
-docker-compose up --build
-```
-
-### Using Kubernetes (Minikube)
-
-```sh
-kubectl apply -f k8s/
-```
-
-### Using Terraform (AWS/Azure)
-
-```sh
-cd terraform
-terraform init
-terraform apply -auto-approve
-```
-
-## Monitoring
-
-Access Grafana at: `http://localhost:5000`
 
 ## Authors
 
