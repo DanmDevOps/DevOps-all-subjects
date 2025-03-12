@@ -81,7 +81,7 @@ The CI/CD pipeline automates the entire deployment workflow from code commit to 
    - Terraform provisions cloud resources such as compute instances, storage, networking, and Kubernetes clusters.
 
 7. **Monitoring Setup**
-   - Deploys Prometheus and Grafana for real-time system monitoring, collecting and visualizing performance metrics.
+   - Deploys Prometheus and Grafana for real-time system monitoring, collecting and visualizing performance metrics & use loki.
 
 8. **Security and Compliance**
    - Scans the application and container images for vulnerabilities using security tools.
