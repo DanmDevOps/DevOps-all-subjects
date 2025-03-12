@@ -95,10 +95,6 @@ The CI/CD pipeline automates the entire deployment workflow from code commit to 
 ## Monitoring Setup
 After deployment, Grafana and Prometheus dashboards provide real-time insights into system performance.
 
-### Access Grafana Dashboard
-1. Open Grafana in the browser and use the configured credentials to log in.
-2. Explore predefined dashboards for system performance, logs, and error tracking.
-
 ## Conclusion
 This project demonstrates a full DevOps pipeline, integrating automation, testing, security, monitoring, and cloud infrastructure management. The structured approach ensures high availability, scalability, and maintainability of the application. By leveraging cloud technologies and best DevOps practices, the system can handle increased demand, minimize downtime, and improve overall reliability. The architecture is built with extensibility in mind, allowing for future enhancements and integrations.
 
