@@ -5,9 +5,7 @@ This project is a **fully automated CI/CD system** for managing and deploying mo
 
 The main goal is to enable **fast, stable, and secure development**, ensuring that every code change is **automatically tested, built, deployed, and monitored** without manual intervention.  
 
-
-
-├project/
+project/
 ├── .github/workflows/ci-cd.yml  # CI/CD pipeline definition
 ├── app/
 │   ├── main.py                  # Flask application entry point
@@ -30,6 +28,7 @@ The main goal is to enable **fast, stable, and secure development**, ensuring th
 ├── Dockerfile                   # Docker image setup
 ├── docker-compose.yaml           # Local containerized development setup
 ├── README.md                     # Project documentation
+
 
 
 ## **Key Processes in the Project**  
